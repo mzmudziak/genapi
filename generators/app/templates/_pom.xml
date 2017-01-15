@@ -41,11 +41,25 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
         <% } %>
+		 <% if(includeH2) { %>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<% } %>
+		<% if(includeMySQL) { %>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<% } %>
+		<% if(includeOracleDB) { %>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+		</dependency>
+		<% } %>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

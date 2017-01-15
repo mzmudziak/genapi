@@ -6,10 +6,16 @@ var _ = require('lodash');
 var prompts = require('./prompts');
 
 module.exports = Generator.extend({
-  initializing: function () {
-    this.log(yosay(
-      'Welcome to the ' + chalk.red('generator-genapi') + ' generator!'
-    ));
+  initializing: {
+    greeting: function () {
+      this.log(yosay(
+        'Welcome to the ' + chalk.red('generator-genapi') + ' generator!'
+      ));
+
+    },
+    allocating: function () {
+      this.databases = [];
+    }
   },
 
   prompting: {

@@ -82,8 +82,11 @@ function askForDatabase() {
             {
                 name: 'MySQL',
                 value: 'mysql'
+            },
+            {
+                name: 'Oracle',
+                value: 'oracle'
             }
-
         ]
     },
     {
@@ -104,6 +107,11 @@ function askForDatabase() {
     this.prompt(prompts).then(function (answers) {
         this.devDatabase = answers.devDatabase;
         this.prodDatabase = answers.prodDatabase;
+        this.databases.push(this.devDatabase);
+        this.databases.push(this.prodDatabase);
+        this.includeH2 = _.includes(this.databases, 'h2');
+        this.includeMySQL = _.includes(this.databases, 'mysql');
+        this.includeOracleDB = _.includes(this.databases, 'oracle');
         done();
     }.bind(this));
 }
