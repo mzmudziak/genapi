@@ -5,6 +5,7 @@ var yosay = require('yosay');
 var _ = require('lodash');
 var prompts = require('./prompts');
 var util = require('../util');
+var writing = require('./writing');
 
 module.exports = Generator.extend({
   initializing: {
@@ -39,36 +40,10 @@ module.exports = Generator.extend({
 
   },
 
-  writing: function () {
-    this.fs.copy(
-      this.templatePath('_gitignore'),
-      this.destinationPath('./' + this.lowercaseAppName + '/.gitignore')
-    );
-    this.fs.copyTpl(
-      this.templatePath('_pom.xml'),
-      this.destinationPath('./' + this.lowercaseAppName + '/pom.xml'),
-      this
-    );
-    this.fs.copyTpl(
-      this.templatePath('_Application.java'),
-      this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + 'Application.java'),
-      this
-    );
-    this.fs.copyTpl(
-      this.templatePath('_ExampleController.java'),
-      this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/controller/ExampleController.java'),
-      this
-    );
-    this.fs.copyTpl(
-      this.templatePath('_ExampleEntity.java'),
-      this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/domain/ExampleEntity.java'),
-      this
-    );
-    this.fs.copyTpl(
-      this.templatePath('_ExampleRepository.java'),
-      this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/repository/ExampleRepository.java'),
-      this
-    );
+  writing: {
+      gitIgnore: writing.gitIgnore,
+      pom: writing.pom,
+      java: writing.java
   },
 
   conflicts: function () {
