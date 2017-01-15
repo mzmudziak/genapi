@@ -13,7 +13,9 @@ module.exports = Generator.extend({
   },
 
   prompting: {
-    askForPackage:  prompts.askForDefault
+    app: prompts.askForAppName,
+    default: prompts.askForPackageName,
+    dependencies: prompts.askForDependencies
   },
 
   configuring: function () {
