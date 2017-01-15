@@ -4,7 +4,8 @@ var _ = require('lodash');
 module.exports = {
     askForAppName,
     askForPackageName,
-    askForDependencies
+    askForDependencies,
+    askForDatabase
 }
 
 function askForAppName() {
@@ -12,8 +13,10 @@ function askForAppName() {
     var prompts = [{
         type: 'input',
         name: 'appName',
-        message: 'What name would you like for your application?'
+        message: 'What name would you like for your application?',
+        default: 'MyApp'
     }];
+
     this.prompt(prompts).then(function (answers) {
         this.appName = answers.appName
         done();
@@ -63,4 +66,44 @@ function askForDependencies() {
         this.includeLiquibase = _.includes(answers.dependencies, 'includeLiquibase');
         done();
     }.bind(this));
-}   
+}
+
+function askForDatabase() {
+    var done = this.async();
+    var prompts = [{
+        type: 'list',
+        name: 'devDatabase',
+        message: 'Which development database engine would you like to use?',
+        choices: [
+            {
+                name: 'H2',
+                value: 'h2'
+            },
+            {
+                name: 'MySQL',
+                value: 'mysql'
+            }
+
+        ]
+    },
+    {
+        type: 'list',
+        name: 'prodDatabase',
+        message: 'Which production database would you like to use',
+        choices: [
+            {
+                name: 'Oracle',
+                value: 'oracle'
+            },
+            {
+                name: 'MySQL',
+                value: 'mysql'
+            }
+        ]
+    }];
+    this.prompt(prompts).then(function (answers) {
+        this.devDatabase = answers.devDatabase;
+        this.prodDatabase = answers.prodDatabase;
+        done();
+    }.bind(this));
+}

@@ -15,7 +15,8 @@ module.exports = Generator.extend({
   prompting: {
     app: prompts.askForAppName,
     default: prompts.askForPackageName,
-    dependencies: prompts.askForDependencies
+    dependencies: prompts.askForDependencies,
+    database: prompts.askForDatabase
   },
 
   configuring: function () {
@@ -29,7 +30,6 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-
     this.fs.copy(
       this.templatePath('test.txt'),
       this.destinationPath('test.txt')
