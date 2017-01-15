@@ -7,13 +7,13 @@ function askForDefault() {
     var done = this.async();
     var prompts = [{
         type: 'confirm',
-        name: 'someAnswer',
+        name: 'continue',
         message: 'Would you like to continue?',
         default: true
     }];
 
     this.prompt(prompts).then(function (answer) {
-        this.answer = answer;
+        this.continue = answer;
         done();
     }.bind(this));
 }   

@@ -1,4 +1,4 @@
-# generator-genapi [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-genapi
 > Generator to help developers start with their REST API project. Generates simple structure, incentivising good practice and clean code. @MZ
 
 ## Installation

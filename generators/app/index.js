@@ -17,13 +17,15 @@ module.exports = Generator.extend({
   },
 
   configuring: function () {
-
-
+      if (this.continue === false){
+        process.exit(1);
+      }
   },
 
   default: function () {
 
   },
+  
   writing: function () {
     this.fs.copy(
       this.templatePath('test.txt'),
