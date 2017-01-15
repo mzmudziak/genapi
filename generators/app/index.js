@@ -19,20 +19,25 @@ module.exports = Generator.extend({
   },
 
   configuring: function () {
-      if (this.continue === false){
-        process.exit(1);
-      }
+    if (this.continue === false) {
+      process.exit(1);
+    }
   },
 
   default: function () {
 
   },
-  
+
   writing: function () {
+
     this.fs.copy(
       this.templatePath('test.txt'),
       this.destinationPath('test.txt')
     );
+    this.fs.copyTpl(
+      this.templatePath('_pom.xml'),
+      this.destinationPath('./pom.xml'), this
+    )
   },
 
   conflicts: function () {

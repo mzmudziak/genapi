@@ -29,7 +29,7 @@ function askForPackageName() {
         default: function () {
             return 'com.' + _.toLower(this.appName);
         }.bind(this),
-        filter: function(answer){
+        filter: function (answer) {
             return _.toLower(answer);
         }
     }];
@@ -47,12 +47,13 @@ function askForDependencies() {
         name: 'dependencies',
         message: 'Would you like to continue?',
         choices: [
-            'Security', 'Liquibase'
+            'Spring Security', 'Liquibase'
         ]
     }];
 
-    this.prompt(prompts).then(function (answer) {
-        this.dependencies = answer;
+    this.prompt(prompts).then(function (answers) {
+        this.includeSpringSecurity = _.includes(answers.dependencies, 'Spring Security');
+        this.includeLiquibase = _.includes(answers.dependencies, 'Liquibase');
         done();
     }.bind(this));
 }   
