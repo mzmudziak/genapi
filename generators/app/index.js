@@ -4,6 +4,7 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
 var prompts = require('./prompts');
+var util = require('../util');
 
 module.exports = Generator.extend({
   initializing: {
@@ -29,6 +30,9 @@ module.exports = Generator.extend({
     if (this.continue === false) {
       process.exit(1);
     }
+
+    this.lowercaseAppName = _.toLower(this.appName);
+    this.packagePath = util.convertToPath(this.package);
   },
 
   default: function () {
@@ -42,8 +46,14 @@ module.exports = Generator.extend({
     );
     this.fs.copyTpl(
       this.templatePath('_pom.xml'),
-      this.destinationPath('./pom.xml'), this
-    )
+      this.destinationPath('./' + this.lowercaseAppName + '/pom.xml'), 
+      this
+    );
+    this.fs.copyTpl(
+      this.templatePath('_Application.java'),
+      this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + 'Application.java'),
+      this
+    );
   },
 
   conflicts: function () {
