@@ -47,13 +47,20 @@ function askForDependencies() {
         name: 'dependencies',
         message: 'Would you like to continue?',
         choices: [
-            'Spring Security', 'Liquibase'
+            {
+                name: 'Spring Security',
+                value: 'includeSecurity'
+            },
+            {
+                name: 'Liquibase',
+                value: 'includeLiquibase'
+            }
         ]
     }];
 
     this.prompt(prompts).then(function (answers) {
-        this.includeSpringSecurity = _.includes(answers.dependencies, 'Spring Security');
-        this.includeLiquibase = _.includes(answers.dependencies, 'Liquibase');
+        this.includeSpringSecurity = _.includes(answers.dependencies, 'includeSecurity');
+        this.includeLiquibase = _.includes(answers.dependencies, 'includeLiquibase');
         done();
     }.bind(this));
 }   
