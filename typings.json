@@ -1,0 +1,7 @@
+{
+  "name": "generator-genapi",
+  "dependencies": {
+    "chalk": "registry:npm/chalk#1.1.1+20160812215109",
+    "lodash": "registry:npm/lodash#4.0.0+20161015015725"
+  }
+}

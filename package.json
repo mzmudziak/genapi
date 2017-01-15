@@ -1,0 +1,58 @@
+{
+  "name": "generator-genapi",
+  "version": "0.0.0",
+  "description": "Generator to help developers start with their REST API project. Generates simple structure, incentivising good practice and clean code. @MZ",
+  "homepage": "",
+  "author": {
+    "name": "mzmudziak",
+    "email": "mzmudziak@gmail.com",
+    "url": ""
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "rest",
+    "restful",
+    "spring",
+    "spring boot",
+    "js",
+    "java",
+    "controller",
+    "umcs",
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "lodash": "^4.17.4",
+    "yeoman-generator": "^1.0.0",
+    "yosay": "^1.2.1"
+  },
+  "devDependencies": {
+    "yeoman-test": "^1.6.0",
+    "yeoman-assert": "^2.2.1",
+    "eslint": "^3.1.1",
+    "eslint-config-xo-space": "^0.15.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-line-ending-corrector": "^1.0.1",
+    "gulp-istanbul": "^1.0.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "mocha": true
+    }
+  },
+  "repository": "/generator-genapi",
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "Apache-2.0"
+}
