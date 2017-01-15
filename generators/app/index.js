@@ -41,8 +41,8 @@ module.exports = Generator.extend({
 
   writing: function () {
     this.fs.copy(
-      this.templatePath('test.txt'),
-      this.destinationPath('test.txt')
+      this.templatePath('_gitignore'),
+      this.destinationPath('./' + this.lowercaseAppName + '/.gitignore')
     );
     this.fs.copyTpl(
       this.templatePath('_pom.xml'),

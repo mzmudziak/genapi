@@ -1,0 +1,12 @@
+# Generated files
+*.jar
+*.war
+*.ear
+*.class
+
+# Maven
+log/
+target/
+
+# VM CrashLogs
+hs_err_pid*
