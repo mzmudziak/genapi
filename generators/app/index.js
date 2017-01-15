@@ -3,36 +3,44 @@ var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
+var prompts = require('./prompts');
 
 module.exports = Generator.extend({
-  prompting: function () {
-    // Have Yeoman greet the user.
+  initializing: function () {
     this.log(yosay(
-      'Welcome to the first-rate ' + chalk.red('generator-genapi') + ' generator!'
+      'Welcome to the ' + chalk.red('generator-genapi') + ' generator!'
     ));
-
-    var prompts = [{
-      type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
-
-    return this.prompt(prompts).then(function (props) {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    }.bind(this));
   },
 
+  prompting: {
+    askForPackage:  prompts.askForDefault
+  },
+
+  configuring: function () {
+
+
+  },
+
+  default: function () {
+
+  },
   writing: function () {
     this.fs.copy(
-      
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
+      this.templatePath('test.txt'),
+      this.destinationPath('test.txt')
     );
   },
 
+  conflicts: function () {
+
+  },
+
+
   install: function () {
-    this.installDependencies();
+
+  },
+
+  end: function () {
+
   }
 });
