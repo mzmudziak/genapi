@@ -33,6 +33,7 @@ module.exports = Generator.extend({
     }
 
     this.lowercaseAppName = _.toLower(this.appName);
+    this.appName = _.upperFirst(this.appName);
     this.packagePath = util.convertToPath(this.package);
   },
 
