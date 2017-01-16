@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import <%= package %>.domain.ExampleEntity;
 import <%= package %>.repository.ExampleRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/example")
 public class ExampleController {
@@ -22,11 +24,11 @@ public class ExampleController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ExampleEntity add(@RequestBody ExampleEntity entity) {
-        return exampleRepository.add(entity);
+        return exampleRepository.save(entity);
     }
 
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {
-        ExampleRepository.delete(id);
+        exampleRepository.delete(id);
     }
 } 
