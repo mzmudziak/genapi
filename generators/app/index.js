@@ -43,7 +43,8 @@ module.exports = Generator.extend({
   writing: {
       gitIgnore: writing.gitIgnore,
       pom: writing.pom,
-      java: writing.java
+      java: writing.java,
+      appProperties: writing.applicationProperties
   },
 
   conflicts: function () {

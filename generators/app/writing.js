@@ -3,7 +3,8 @@
 module.exports = {
     gitIgnore,
     pom,
-    java
+    java, 
+    applicationProperties
 }
 function gitIgnore() {
     this.fs.copy(
@@ -41,4 +42,12 @@ function java() {
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/repository/ExampleRepository.java'),
         this
     );
+}
+
+function applicationProperties() {
+    this.fs.copy(
+        this.templatePath('_application.properties'),
+        this.destinationPath('./' + this.lowercaseAppName + '/src/main/resources/application.properties'),
+        this
+    )
 }
