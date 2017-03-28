@@ -1,11 +1,13 @@
 'use strict';
-var _ = require('lodash');
+var _ = require('lodash'),
+    chalk = require('chalk');
 
 module.exports = {
     askForAppName,
     askForPackageName,
     askForDependencies,
-    askForDatabase
+    askForDatabase,
+    askForDefaultImplementation
 }
 
 function askForAppName() {
@@ -48,7 +50,7 @@ function askForDependencies() {
     var prompts = [{
         type: 'checkbox',
         name: 'dependencies',
-        message: 'Would you like to continue?',
+        message: 'Which dependencies would you like to include?',
         choices: [
             {
                 name: 'Spring Security',
@@ -112,6 +114,20 @@ function askForDatabase() {
         this.includeH2 = _.includes(this.databases, 'h2');
         this.includeMySQL = _.includes(this.databases, 'mysql');
         this.includeOracleDB = _.includes(this.databases, 'oracle');
+        done();
+    }.bind(this));
+}
+
+function askForDefaultImplementation() {
+    var done = this.async();
+    var prompts = [{
+        type: 'confirm',
+        name: 'defaultImplementation',
+        message: 'Would you like to include default implementation for entities? \n' + chalk.green('+') + ' You can generate them later using entity subgenerator',
+        default: false
+    }];
+    this.prompt(prompts).then(function (answers) {
+        this.includeDefaultImpl = answers.defaultImplementation;
         done();
     }.bind(this));
 }

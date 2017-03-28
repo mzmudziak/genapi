@@ -1,11 +1,11 @@
 'use strict';
-var Generator = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var _ = require('lodash');
-var prompts = require('./prompts');
-var util = require('../util');
-var writing = require('./writing');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const _ = require('lodash');
+const prompts = require('./prompts');
+const util = require('../util');
+const writing = require('./writing');
 
 module.exports = Generator.extend({
   initializing: {
@@ -22,9 +22,10 @@ module.exports = Generator.extend({
 
   prompting: {
     app: prompts.askForAppName,
-    default: prompts.askForPackageName,
+    packageName: prompts.askForPackageName,
     dependencies: prompts.askForDependencies,
-    database: prompts.askForDatabase
+    database: prompts.askForDatabase,
+    defaultImpl: prompts.askForDefaultImplementation
   },
 
   configuring: function () {
@@ -45,6 +46,7 @@ module.exports = Generator.extend({
     gitIgnore: writing.gitIgnore,
     pom: writing.pom,
     java: writing.java,
+    defaultImpl: writing.defaultImpl,
     appProperties: writing.applicationProperties
   },
 
@@ -58,6 +60,9 @@ module.exports = Generator.extend({
   },
 
   end: function () {
+    this.log(
+      'Thank you for using the ' + chalk.red('generator-genapi') + ' generator!'
+    );
 
   }
 });
