@@ -8,7 +8,7 @@ module.exports = {
     askForDependencies,
     askForDatabase,
     askForDefaultImplementation
-}
+};
 
 function askForAppName() {
     var done = this.async();
@@ -20,7 +20,7 @@ function askForAppName() {
     }];
 
     this.prompt(prompts).then(function (answers) {
-        this.appName = answers.appName
+        this.appName = answers.appName;
         done();
     }.bind(this));
 }
@@ -111,7 +111,7 @@ function askForDatabase() {
         this.prodDatabase = answers.prodDatabase;
         this.databases.push(this.devDatabase);
         this.databases.push(this.prodDatabase);
-        this.includeH2 = _.includes(this.databases, 'h2');
+        this.includeH2 = _.inc
         this.includeMySQL = _.includes(this.databases, 'mysql');
         this.includeOracleDB = _.includes(this.databases, 'oracle');
         done();

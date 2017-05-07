@@ -6,7 +6,8 @@ module.exports = {
     java,
     defaultImpl,
     applicationProperties
-}
+};
+
 function gitIgnore() {
     this.fs.copy(
         this.templatePath('_gitignore'),
@@ -28,7 +29,6 @@ function java() {
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + 'Application.java'),
         this
     );
-
 }
 
 function defaultImpl() {
@@ -56,5 +56,5 @@ function applicationProperties() {
         this.templatePath('_application.properties'),
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/resources/application.properties'),
         this
-    )
+    );
 }

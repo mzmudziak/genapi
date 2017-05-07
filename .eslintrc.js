@@ -197,7 +197,7 @@ module.exports = {
         "prefer-const": "error",
         "prefer-destructuring": "error",
         "prefer-numeric-literals": "error",
-        "prefer-reflect": "error",
+        "prefer-reflect": "off",
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "off",

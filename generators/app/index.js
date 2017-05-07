@@ -13,7 +13,6 @@ module.exports = Generator.extend({
       this.log(yosay(
         'Welcome to the ' + chalk.red('generator-genapi') + ' generator!'
       ));
-
     },
     allocating: function () {
       this.databases = [];
@@ -63,6 +62,5 @@ module.exports = Generator.extend({
     this.log(
       'Thank you for using the ' + chalk.red('generator-genapi') + ' generator!'
     );
-
   }
 });

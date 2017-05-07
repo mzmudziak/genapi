@@ -1,10 +1,9 @@
 'use strict';
-const _ = require('lodash');
 const chalk = require('chalk');
 
 module.exports = {
     askForEntity
-}
+};
 
 function askForEntity() {
     var done = this.async();
@@ -22,14 +21,14 @@ function askForEntity() {
             name: 'generateAnotherEntity',
             message: 'Would you like to generate another entity?',
             default: true
-        }, {
+        },
+        {
             when: (answer) => answer.generateFirstEntity === true || answer.generateAnotherEntity === true,
             type: 'input',
             name: 'entityName',
             message: 'What name would you like for your entity?',
-            validate: function (input) {
-                return input !== null && input !== '';
-            }
+            validate: (input) => input !== null && input !== ''
+            
         }];
 
     this.prompt(prompts).then(function (answers) {
