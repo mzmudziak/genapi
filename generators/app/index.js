@@ -35,6 +35,9 @@ module.exports = Generator.extend({
     this.lowercaseAppName = _.toLower(this.appName);
     this.appName = _.upperFirst(this.appName);
     this.packagePath = util.convertToPath(this.package);
+    this.config.set('packagePath', this.packagePath);
+    this.config.set('package', this.package);
+    this.config.set('lowercaseAppName', this.lowercaseAppName);
   },
 
   default: function () {

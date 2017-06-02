@@ -22,7 +22,9 @@ module.exports = Generator.extend({
     },
 
     configuring: function () {
-
+        this.lowercaseAppName = this.config.get('lowercaseAppName');
+        this.package = this.config.get('package');
+        this.packagePath = this.config.get('packagePath');
     },
 
     default: function () {

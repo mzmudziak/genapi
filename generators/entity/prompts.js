@@ -1,5 +1,6 @@
 'use strict';
 const chalk = require('chalk');
+const _ = require('lodash');
 
 module.exports = {
     askForEntity
@@ -9,13 +10,6 @@ function askForEntity() {
     var done = this.async();
     var prompts = [
         {
-            when: () => this.entities.length === 0,
-            type: 'confirm',
-            name: 'generateFirstEntity',
-            message: 'Would you like to generate an entity?',
-            default: true
-        },
-        {
             when: () => this.entities.length > 0,
             type: 'confirm',
             name: 'generateAnotherEntity',
@@ -23,18 +17,19 @@ function askForEntity() {
             default: true
         },
         {
-            when: (answer) => answer.generateFirstEntity === true || answer.generateAnotherEntity === true,
+            when: (answer) => this.entities.length === 0 || answer.generateAnotherEntity === true,
             type: 'input',
             name: 'entityName',
             message: 'What name would you like for your entity?',
             validate: (input) => input !== null && input !== ''
-            
         }];
 
     this.prompt(prompts).then(function (answers) {
         var entity = {};
-        entity.name = answers.entityName
-        if (answers.generateFirstEntity || answers.generateAnotherEntity) {
+        entity.name = _.upperFirst(answers.entityName);
+        entity.camelCaseName = _.camelCase(entity.name);
+        entity.mapping = _.toLower(entity.name) + 's';
+        if (this.entities.length === 0 || answers.generateAnotherEntity) {
             this.entities.push(entity);
             logEntities.call(this);
             askForEntity.call(this, done);
