@@ -13,11 +13,9 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
-public class <%= entity.name %>Entity {
+public class <%= entityName %>Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-
-    private String name;
 }

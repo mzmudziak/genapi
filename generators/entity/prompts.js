@@ -3,47 +3,90 @@ const chalk = require('chalk');
 const _ = require('lodash');
 
 module.exports = {
-    askForEntity
+    askForEntityName,
+    askForEntityFields
 };
 
-function askForEntity() {
+function askForEntityName() {
     var done = this.async();
     var prompts = [
         {
-            when: () => this.entities.length > 0,
-            type: 'confirm',
-            name: 'generateAnotherEntity',
-            message: 'Would you like to generate another entity?',
-            default: true
-        },
-        {
-            when: (answer) => this.entities.length === 0 || answer.generateAnotherEntity === true,
+            when: () => this.fields.length === 0,
             type: 'input',
             name: 'entityName',
             message: 'What name would you like for your entity?',
             validate: (input) => input !== null && input !== ''
         }];
-
     this.prompt(prompts).then(function (answers) {
-        var entity = {};
-        entity.name = _.upperFirst(answers.entityName);
-        entity.camelCaseName = _.camelCase(entity.name);
-        entity.mapping = _.toLower(entity.name) + 's';
-        if (this.entities.length === 0 || answers.generateAnotherEntity) {
-            this.entities.push(entity);
-            logEntities.call(this);
-            askForEntity.call(this, done);
+        this.log(answers);
+        this.entityName = _.upperFirst(answers.entityName);
+        this.log(this.entityName);
+        done();
+    }.bind(this));
+}
+
+function askForEntityFields() {
+    var done = this.async();
+    var prompts = [
+        {
+            type: 'confirm',
+            name: 'addField',
+            message: 'Would you like to add a field to your entity?',
+            default: true
+        },
+        {
+            when: (answers) => answers.addField === true,
+            type: 'input',
+            name: 'name',
+            message: 'What name would you like for your field?',
+            validate: (input) => input !== null && input !== ''
+        },
+        {
+            when: (answers) => answers.addField === true,
+            type: 'list',
+            name: 'type',
+            message: 'What type would you like for your field?',
+            choices: [
+                {
+                    name: 'String',
+                    value: 'string'
+                },
+                {
+                    name: 'Integer',
+                    value: 'integer'
+                },
+                {
+                    name: 'Double',
+                    value: 'double'
+                },
+                {
+                    name: 'Float',
+                    value: 'float'
+                },
+                {
+                    name: 'Boolean',
+                    value: 'boolean'
+                }]
+        }];
+    this.prompt(prompts).then(function (answers) {
+        var field = {};
+        if (answers.addField) {
+            field.name = answers.name;
+            field.type = answers.type;
+            this.fields.push(field);
+            logFields.call(this);
+            askForEntityFields.call(this, done);
         } else {
             done();
         }
     }.bind(this));
 }
 
-function logEntities() {
-    if (this.entities.length > 0) {
-        this.log('Currently added entities:');
-        this.entities.forEach((element) => {
-            this.log(chalk.grey(element.name));
+function logFields() {
+    if (this.fields.length > 0) {
+        this.log('Currently added fields:');
+        this.fields.forEach((field) => {
+            this.log(chalk.grey(field.name));
         });
     }
 }

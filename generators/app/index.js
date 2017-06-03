@@ -62,7 +62,7 @@ module.exports = Generator.extend({
   end: function () {
     this.log(
       '\nThank you for using the ' + chalk.red('generator-genapi') + ' generator!' +
-      chalk.green('\nDid you know?') + '\nYou can generate entities using ' + chalk.cyan('genapi:entity') + ' generator!\n'
+      chalk.green('\n\nDid you know?') + '\nYou can generate entities using ' + chalk.cyan('genapi:entity') + ' generator!'
     );
   }
 });

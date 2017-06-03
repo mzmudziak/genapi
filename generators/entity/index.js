@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const yosay = require('yosay');
 const prompts = require('./prompts');
 const writing = require('./writing');
+const _ = require('lodash');
 
 module.exports = Generator.extend({
     initializing: {
@@ -13,18 +14,21 @@ module.exports = Generator.extend({
             ));
         },
         init: function () {
-            this.entities = [];
+            this.fields = [];
         }
     },
 
     prompting: {
-        entities: prompts.askForEntity
+        name: prompts.askForEntityName,
+        fields: prompts.askForEntityFields
     },
 
     configuring: function () {
         this.lowercaseAppName = this.config.get('lowercaseAppName');
         this.package = this.config.get('package');
         this.packagePath = this.config.get('packagePath');
+        this.camelCaseName = _.camelCase(this.entityName);
+        this.mapping = _.toLower(this.entityName) + 's';
     },
 
     default: function () {
