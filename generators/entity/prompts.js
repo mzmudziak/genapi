@@ -18,9 +18,7 @@ function askForEntityName() {
             validate: (input) => input !== null && input !== ''
         }];
     this.prompt(prompts).then(function (answers) {
-        this.log(answers);
         this.entityName = _.upperFirst(answers.entityName);
-        this.log(this.entityName);
         done();
     }.bind(this));
 }
@@ -49,29 +47,29 @@ function askForEntityFields() {
             choices: [
                 {
                     name: 'String',
-                    value: 'string'
+                    value: 'String'
                 },
                 {
                     name: 'Integer',
-                    value: 'integer'
+                    value: 'Integer'
                 },
                 {
                     name: 'Double',
-                    value: 'double'
+                    value: 'Double'
                 },
                 {
                     name: 'Float',
-                    value: 'float'
+                    value: 'Float'
                 },
                 {
                     name: 'Boolean',
-                    value: 'boolean'
+                    value: 'Boolean'
                 }]
         }];
     this.prompt(prompts).then(function (answers) {
         var field = {};
         if (answers.addField) {
-            field.name = answers.name;
+            field.name = _.camelCase(answers.name);
             field.type = answers.type;
             this.fields.push(field);
             logFields.call(this);
