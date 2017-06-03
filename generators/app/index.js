@@ -27,10 +27,10 @@ module.exports = Generator.extend({
   },
 
   configuring: function () {
-    if (this.continue === false) {
-      process.exit(1);
-    }
-
+    this.includeH2 = _.includes(this.databases, 'h2');
+    this.includeMySQL = _.includes(this.databases, 'mysql');
+    this.includeOracleDB = _.includes(this.databases, 'oracle');
+    this.includePostgreSQL = _.includes(this.databases, 'postgresql');
     this.lowercaseAppName = _.toLower(this.appName);
     this.appName = _.upperFirst(this.appName);
     this.packagePath = util.convertToPath(this.package);
