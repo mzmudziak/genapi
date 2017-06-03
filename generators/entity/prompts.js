@@ -11,7 +11,7 @@ function askForEntityName() {
     var done = this.async();
     var prompts = [
         {
-            when: () => this.fields.length === 0,
+            when: this.fields.length === 0,
             type: 'input',
             name: 'entityName',
             message: 'What name would you like for your entity?',
