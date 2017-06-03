@@ -17,10 +17,10 @@ function askForEntityName() {
             message: 'What name would you like for your entity?',
             validate: (input) => input !== null && input !== ''
         }];
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         this.entityName = _.upperFirst(answers.entityName);
         done();
-    }.bind(this));
+    });
 }
 
 function askForEntityFields() {
@@ -66,7 +66,7 @@ function askForEntityFields() {
                     value: 'Boolean'
                 }]
         }];
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         var field = {};
         if (answers.addField) {
             field.name = _.camelCase(answers.name);
@@ -77,7 +77,7 @@ function askForEntityFields() {
         } else {
             done();
         }
-    }.bind(this));
+    });
 }
 
 function logFields() {

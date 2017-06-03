@@ -18,10 +18,10 @@ function askForAppName() {
         default: 'MyApp'
     }];
 
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         this.appName = answers.appName;
         done();
-    }.bind(this));
+    });
 }
 
 function askForPackageName() {
@@ -30,18 +30,14 @@ function askForPackageName() {
         type: 'input',
         name: 'package',
         message: 'What package name would you like to use for your project?',
-        default: function () {
-            return 'com.' + _.toLower(this.appName);
-        }.bind(this),
-        filter: function (answer) {
-            return _.toLower(answer);
-        }
+        default: () => 'com.' + _.toLower(this.appName),
+        filter: (answer) => _.toLower(answer)
     }];
 
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         this.package = answers.package;
         done();
-    }.bind(this));
+    });
 }
 
 function askForDependencies() {
@@ -58,10 +54,10 @@ function askForDependencies() {
         ]
     }];
 
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         this.includeSpringSecurity = _.includes(answers.dependencies, 'includeSecurity');
         done();
-    }.bind(this));
+    });
 }
 
 function askForDatabase() {
@@ -121,7 +117,7 @@ function askForDatabase() {
         message: 'Production database connection URL?',
         default: (answers) => determineDbURL(answers.prodDatabase, this.appName)
     }];
-    this.prompt(prompts).then(function (answers) {
+    this.prompt(prompts).then((answers) => {
         this.databases.push(answers.devDatabase);
         this.databases.push(answers.prodDatabase);
         this.devDbURL = answers.devDbURL;
@@ -135,7 +131,7 @@ function askForDatabase() {
             );
         }
         done();
-    }.bind(this));
+    });
 }
 
 function determineDbURL(db, appName) {
