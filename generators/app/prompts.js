@@ -1,6 +1,6 @@
 'use strict';
-var _ = require('lodash'),
-    chalk = require('chalk');
+const _ = require('lodash');
+const chalk = require('chalk');
 
 module.exports = {
     askForAppName,
@@ -99,37 +99,21 @@ function askForDatabase() {
                 value: 'oracle'
             }
         ]
-    },
-    {
-        when: (answers) => answers.prodDatabase === 'oracle' || answers.devDatabase === 'oracle',
-        type: 'confirm',
-        name: 'confirmOracle',
-        message: 'Are you sure?\n' +
-        chalk.red('!') + ' You have chosen oracle as your database.\n' +
-        chalk.red('!') + ' You will have to manually include Oracle Database driver to your environment.',
-        default: true
-    },
-    {
-        when: (answer) => answer.confirmOracle === false,
-        type: 'list',
-        name: 'substituteDatabase',
-        message: 'Which database would you like to use instead?',
-        choices: [
-            {
-                name: 'MySQL',
-                value: 'mysql'
-            }
-        ]
     }];
     this.prompt(prompts).then(function (answers) {
         this.databases.push(answers.devDatabase);
         this.databases.push(answers.prodDatabase);
-        if (answers.confirmOracle === false) {
-            _.remove(this.databases, (db) => db === 'oracle');
-        }
         this.includeH2 = _.includes(this.databases, 'h2');
-        this.includeMySQL = _.includes(this.databases, 'mysql') || answers.substituteDatabase === 'mysql';
+        this.includeMySQL = _.includes(this.databases, 'mysql');
         this.includeOracleDB = _.includes(this.databases, 'oracle');
+        this.devDatabase = answers.devDatabase;
+        this.prodDatabase = answers.prodDatabase;
+        if (_.includes(this.databases, 'oracle')) {
+            this.log(
+                chalk.red('!') + ' You have chosen ' + chalk.green('Oracle') + ' as your database\n' +
+                chalk.red('!') + ' You will have to manually download and include its driver in classpath!'
+            );
+        }
         done();
     }.bind(this));
 }
