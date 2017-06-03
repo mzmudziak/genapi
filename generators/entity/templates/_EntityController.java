@@ -1,23 +1,20 @@
 package <%= package %>.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.beans.factory.annotation.Autowired;
 import <%= package %>.domain.<%= entityName %>Entity;
 import <%= package %>.repository.<%= entityName %>Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/<%= mapping %>")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class <%= entityName %>Controller {
-    @Autowired
-    private <%= entityName %>Repository <%= camelCaseName %>Repository;
+    private final <%= entityName %>Repository <%= camelCaseName %>Repository;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET) 
     public List<<%= entityName %>Entity> findAll() {
         return <%= camelCaseName %>Repository.findAll();
     }
