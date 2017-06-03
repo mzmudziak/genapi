@@ -23,8 +23,7 @@ module.exports = Generator.extend({
     app: prompts.askForAppName,
     packageName: prompts.askForPackageName,
     dependencies: prompts.askForDependencies,
-    database: prompts.askForDatabase,
-    defaultImpl: prompts.askForDefaultImplementation
+    database: prompts.askForDatabase
   },
 
   configuring: function () {
@@ -48,7 +47,6 @@ module.exports = Generator.extend({
     gitIgnore: writing.gitIgnore,
     pom: writing.pom,
     java: writing.java,
-    defaultImpl: writing.defaultImpl,
     appProperties: writing.applicationProperties
   },
 
@@ -63,7 +61,8 @@ module.exports = Generator.extend({
 
   end: function () {
     this.log(
-      'Thank you for using the ' + chalk.red('generator-genapi') + ' generator!'
+      '\nThank you for using the ' + chalk.red('generator-genapi') + ' generator!\n' +
+      chalk.green('\nDid you know?') + '\nYou can generate entities using ' + chalk.cyan('genapi:entity') + ' generator!'
     );
   }
 });

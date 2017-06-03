@@ -6,8 +6,7 @@ module.exports = {
     askForAppName,
     askForPackageName,
     askForDependencies,
-    askForDatabase,
-    askForDefaultImplementation
+    askForDatabase
 };
 
 function askForAppName() {
@@ -55,17 +54,12 @@ function askForDependencies() {
             {
                 name: 'Spring Security',
                 value: 'includeSecurity'
-            },
-            {
-                name: 'Liquibase',
-                value: 'includeLiquibase'
             }
         ]
     }];
 
     this.prompt(prompts).then(function (answers) {
         this.includeSpringSecurity = _.includes(answers.dependencies, 'includeSecurity');
-        this.includeLiquibase = _.includes(answers.dependencies, 'includeLiquibase');
         done();
     }.bind(this));
 }
@@ -136,20 +130,6 @@ function askForDatabase() {
         this.includeH2 = _.includes(this.databases, 'h2');
         this.includeMySQL = _.includes(this.databases, 'mysql') || answers.substituteDatabase === 'mysql';
         this.includeOracleDB = _.includes(this.databases, 'oracle');
-        done();
-    }.bind(this));
-}
-
-function askForDefaultImplementation() {
-    var done = this.async();
-    var prompts = [{
-        type: 'confirm',
-        name: 'defaultImplementation',
-        message: 'Would you like to include default implementation for entities? \n' + chalk.green('+') + ' You can generate them later using entity subgenerator',
-        default: false
-    }];
-    this.prompt(prompts).then(function (answers) {
-        this.includeDefaultImpl = answers.defaultImplementation;
         done();
     }.bind(this));
 }

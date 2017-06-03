@@ -4,7 +4,6 @@ module.exports = {
     gitIgnore,
     pom,
     java,
-    defaultImpl,
     applicationProperties
 };
 
@@ -29,26 +28,6 @@ function java() {
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + 'Application.java'),
         this
     );
-}
-
-function defaultImpl() {
-    if (this.includeDefaultImpl) {
-        this.fs.copyTpl(
-            this.templatePath('_ExampleController.java'),
-            this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/controller/ExampleController.java'),
-            this
-        );
-        this.fs.copyTpl(
-            this.templatePath('_ExampleEntity.java'),
-            this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/domain/ExampleEntity.java'),
-            this
-        );
-        this.fs.copyTpl(
-            this.templatePath('_ExampleRepository.java'),
-            this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/repository/ExampleRepository.java'),
-            this
-        );
-    }
 }
 
 function applicationProperties() {
