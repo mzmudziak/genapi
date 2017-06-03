@@ -107,10 +107,25 @@ function askForDatabase() {
                 value: 'postgresql'
             }
         ]
+    },
+    {
+        when: (answer) => answer.devDatabase !== 'h2',
+        type: 'input',
+        name: 'devDbURL',
+        message: 'Development database connection URL?',
+        default: (answers) => determineDbURL(answers.devDatabase, this.appName)
+    },
+    {
+        type: 'input',
+        name: 'prodDbURL',
+        message: 'Production database connection URL?',
+        default: (answers) => determineDbURL(answers.prodDatabase, this.appName)
     }];
     this.prompt(prompts).then(function (answers) {
         this.databases.push(answers.devDatabase);
         this.databases.push(answers.prodDatabase);
+        this.devDbURL = answers.devDbURL;
+        this.prodDbURL = answers.prodDbURL;
         this.devDatabase = answers.devDatabase;
         this.prodDatabase = answers.prodDatabase;
         if (_.includes(this.databases, 'oracle')) {
@@ -121,4 +136,13 @@ function askForDatabase() {
         }
         done();
     }.bind(this));
+}
+
+function determineDbURL(db, appName) {
+    switch (db) {
+        case 'oracle': return 'jdbc:oracle:thin:@localhost:1521/XE';
+        case 'mysql': return 'jdbc:mysql://localhost:3306/' + _.toLower(appName);
+        case 'postgresql': return 'jdbc:postgresql://localhost:5432/' + _.toLower(appName);
+        default: return '';
+    }
 }

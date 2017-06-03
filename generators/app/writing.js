@@ -31,12 +31,12 @@ function java() {
 }
 
 function applicationProperties() {
-    this.fs.copy(
+    this.fs.copyTpl(
         this.templatePath('_application-dev.properties'),
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/resources/application-dev.properties'),
         this
     );
-    this.fs.copy(
+    this.fs.copyTpl(
         this.templatePath('_application-prod.properties'),
         this.destinationPath('./' + this.lowercaseAppName + '/src/main/resources/application-prod.properties'),
         this
