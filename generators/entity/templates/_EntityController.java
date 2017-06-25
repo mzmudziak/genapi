@@ -28,4 +28,15 @@ public class <%= entityName %>Controller {
     public void delete(@PathVariable("id") Long id) {
         <%= camelCaseName %>Repository.delete(id);
     }
+<%_ for (index in queryMethods) {
+	var query_camel  = queryMethods[index].camel;
+	var query_upper_camel  = queryMethods[index].upperCamel;
+	var field_type = queryMethods[index].type;
+_%>
+
+    @RequestMapping(path = "/by<%= query_upper_camel %>s", method = RequestMethod.GET) 
+    public List<<%= entityName %>> findBy<%= query_upper_camel %>s(@RequestParam <%= field_type %> <%= query_camel %>) {
+        return <%= camelCaseName %>Repository.findBy<%= query_upper_camel %>(<%= query_camel %>);
+    }
+<%_ } _%>
 } 
