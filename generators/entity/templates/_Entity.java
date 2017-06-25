@@ -20,7 +20,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class <%= entityName %>Entity {
+public class <%= entityName %> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)

@@ -34,8 +34,19 @@ function askForEntityName() {
 
                 return true;
             }
-        }];
+        },
+        {
+            when: (answers) => !_.endsWith(_.toLower(answers.entityName), 'entity'),
+            type: 'confirm',
+            name: 'appendEntityToName',
+            message: 'Your entity name did not end with "Entity". Do you want to append it?',
+            default: true
+        }
+    ];
     this.prompt(prompts).then((answers) => {
+        if (answers.appendEntityToName === true) {
+            answers.entityName += 'Entity';
+        }
         this.entityName = _.upperFirst(answers.entityName);
         done();
     });
@@ -91,7 +102,7 @@ function askForEntityFields() {
                 return response.type === 'Custom';
             },
             type: 'input',
-            name: 'fieldTypeName',
+            name: 'customFieldTypeName',
             message: 'Name of custom type?',
             validate: function (response) {
                 if (response === '') {
@@ -128,13 +139,14 @@ function askForEntityFields() {
 
                 return true;
             },
-            default: (response) => _.camelCase(response.fieldTypeName)
+            default: (response) => _.camelCase(response.customFieldTypeName)
         }
     ];
     this.prompt(prompts).then((answers) => {
         var field = {};
         if (answers.type === 'Custom') {
-            answers.type = answers.fieldTypeName;
+            answers.type = answers.customFieldTypeName;
+            field.custom = true;
         }
         if (answers.addField) {
             field.name = _.camelCase(answers.name);
@@ -266,14 +278,13 @@ function askForQueryMethods() {
             type: 'checkbox',
             name: 'queryMethods',
             message: 'For which fields do you want query methods?',
-            choices: () => this.fields.slice()
+            choices: () => this.fields.filter((field) => field.custom !== true)
         }
     ];
     this.prompt(prompts).then((answers) => {
         if (answers.generateQueryMethods === true) {
-            _.forOwn(answers.queries, (index) => {
+            _.forOwn(answers.queryMethods, (index) => {
                 var queryMethod = {
-                    snake: _.toUpper(_.snakeCase(index)),
                     upperCamel: _.upperFirst(_.camelCase(index)),
                     camel: _.camelCase(index),
                     type: util.findTypeByItsName.call(this, index)

@@ -12,7 +12,7 @@ function entities() {
     );
     this.fs.copyTpl(
         this.templatePath('_Entity.java'),
-        this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/domain/' + this.entityName + 'Entity.java'),
+        this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/domain/' + this.entityName + '.java'),
         this
     );
     this.fs.copyTpl(
