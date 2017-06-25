@@ -5,7 +5,8 @@ const _ = require('lodash');
 
 module.exports = {
     askForEntityName,
-    askForEntityFields
+    askForEntityFields,
+    askForRelationship
 };
 
 function askForEntityName() {
@@ -62,35 +63,170 @@ function askForEntityFields() {
             message: 'What type would you like for your field?',
             choices: [
                 {
-                    name: 'String',
-                    value: 'String'
+                    value: 'String',
+                    name: 'String'
                 },
                 {
-                    name: 'Integer',
-                    value: 'Integer'
+                    value: 'Integer',
+                    name: 'Integer'
                 },
                 {
-                    name: 'Double',
-                    value: 'Double'
+                    value: 'Long',
+                    name: 'Long'
                 },
                 {
-                    name: 'Float',
-                    value: 'Float'
+                    value: 'Float',
+                    name: 'Float'
                 },
                 {
-                    name: 'Boolean',
-                    value: 'Boolean'
+                    value: 'Double',
+                    name: 'Double'
+                },
+                {
+                    value: 'Boolean',
+                    name: 'Boolean'
+                },
+                {
+                    value: 'Custom',
+                    name: 'custom'
                 }
             ]
+        },
+        {
+            when: function (response) {
+                return response.fieldType === 'Custom';
+            },
+            type: 'input',
+            name: 'fieldTypeName',
+            validate: function (response) {
+                if (response === '') {
+                    return 'Field Type name can not be empty';
+                }
+                if (response.charAt(0) !== response.charAt(0).toUpperCase()) {
+                    return 'Field Type name must start with upper case';
+                }
+                if (validator.isReserved(response, 'JAVA')) {
+                    return 'Your field type name cannot contain a Java reserved keyword';
+                }
+
+                return true;
+            },
+            message: 'Name of custom type?'
         }];
     this.prompt(prompts).then((answers) => {
         var field = {};
+        if (answers.fieldType === 'Custom') {
+            answers.fieldType = answers.fieldTypeName;
+        }
         if (answers.addField) {
             field.name = _.camelCase(answers.name);
             field.type = answers.type;
             this.fields.push(field);
             logFields.call(this);
             askForEntityFields.call(this, done);
+        } else {
+            done();
+        }
+    });
+}
+
+function askForRelationship() {
+    var done = this.async();
+    var prompts = [
+        {
+            type: 'confirm',
+            message: 'Would you like to add a relationship?',
+            name: 'addRelationship',
+            default: false
+        },
+        {
+            when: (response) => response.addRelationship === true,
+            type: 'input',
+            name: 'name',
+            message: 'What is the name of your relationship?',
+            validate: (response) => {
+                if (response === '') {
+                    return 'Relationship name can not be empty';
+                }
+                if (response.charAt(0) !== response.charAt(0).toUpperCase()) {
+                    return 'Relationship name must start with upper case';
+                }
+                if (validator.isReserved(response, 'JAVA')) {
+                    return 'Your relationship name cannot contain a Java reserved keyword';
+                }
+
+                return true;
+            }
+        },
+        {
+            when: (response) => response.addRelationship === true,
+            type: 'input',
+            name: 'field',
+            message: 'What is the name of your relationship field?',
+            default: (response) => _.camelCase(response.name),
+            validate: (response) => {
+                if (response === '') {
+                    return 'Field name cannot not be empty';
+                }
+                if (response.charAt(0) === response.charAt(0).toUpperCase()) {
+                    return 'Field name must start with lower case';
+                }
+                if (this.fieldNamesSnakeCase.indexOf(_.snakeCase(response)) !== -1) {
+                    return 'Field name already used.';
+                }
+                if (validator.isReserved(response, 'JAVA')) {
+                    return 'Your relationship field name cannot contain a Java reserved keyword';
+                }
+
+                return true;
+            }
+        },
+        {
+            when: (response) => response.addRelationship === true,
+            name: 'type',
+            type: 'list',
+            message: 'What is the type of your relationship?',
+            choices: [
+                {
+                    value: 'one_to_one',
+                    name: 'one_to_one'
+                },
+                {
+                    value: 'one_to_many',
+                    name: 'one_to_many'
+                },
+                {
+                    value: 'many_to_one',
+                    name: 'many_to_one'
+                },
+                {
+                    value: 'many_to_many',
+                    name: 'many_to_many'
+                }
+            ]
+        }
+    ];
+    this.prompt(prompts).then((answers) => {
+        var relationship = {};
+        if (answers.addRelationship === true) {
+            relationship.name = answers.name;
+            relationship.field = answers.field;
+            relationship.type = answers.type;
+            if (relationship.type === 'one_to_one') {
+                this.hasOneToOneRelationship = true;
+            }
+            if (relationship.type === 'one_to_many') {
+                this.hasOneToManyRelationship = true;
+            }
+            if (relationship.type === 'many_to_one') {
+                this.hasManyToOneRelationship = true;
+            }
+            if (relationship.type === 'many_to_many') {
+                this.hasManyToManyRelationship = true;
+            }
+            this.fieldNamesSnakeCase.push(_.snakeCase(relationship.field));
+            this.relationships.push(relationship);
+            askForRelationship.call(this, done);
         } else {
             done();
         }
