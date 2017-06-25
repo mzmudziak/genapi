@@ -153,7 +153,6 @@ function askForEntityFields() {
             field.type = answers.type;
             this.fieldNamesSnakeCase.push(_.snakeCase(field.name));
             this.fields.push(field);
-            util.logFields.call(this);
             askForEntityFields.call(this, done);
         } else {
             done();

@@ -28,9 +28,11 @@ function findTypeByItsName(name) {
 
 function logFields() {
     if (this.fields.length > 0) {
-        this.log('Currently added fields:');
-        this.fields.forEach((field) => {
-            this.log(chalk.grey(field.name));
-        });
+        this.log('Fields:');
+        this.fields.forEach((field) => this.log(chalk.grey(field.name)));
+    }
+    if (this.relationships.length > 0) {
+        this.log('Relationships:');
+        this.relationships.forEach((relationship) => this.log(chalk.grey(relationship.name)));
     }
 }

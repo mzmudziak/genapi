@@ -5,6 +5,7 @@ const yosay = require('yosay');
 const prompts = require('./prompts');
 const writing = require('./writing');
 const _ = require('lodash');
+const util = require('../util');
 
 module.exports = Generator.extend({
     initializing: {
@@ -41,7 +42,7 @@ module.exports = Generator.extend({
     },
 
     default: function () {
-
+        util.logFields.call(this);
     },
 
     writing: {

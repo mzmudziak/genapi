@@ -25,7 +25,7 @@ function pom() {
 function java() {
     this.fs.copyTpl(
         this.templatePath('_Application.java'),
-        this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + 'Application.java'),
+        this.destinationPath('./' + this.lowercaseAppName + '/src/main/java/' + this.packagePath + '/' + this.appName + '.java'),
         this
     );
 }
