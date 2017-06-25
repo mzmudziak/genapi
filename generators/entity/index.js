@@ -15,12 +15,19 @@ module.exports = Generator.extend({
         },
         init: function () {
             this.fields = [];
+            this.fieldNamesSnakeCase = [];
+            this.relationships = [];
+            this.hasOneToOneRelationship = false;
+            this.hasOneToManyRelationship = false;
+            this.hasManyToOneRelationship = false;
+            this.hasManyToManyRelationship = false;
         }
     },
 
     prompting: {
         name: prompts.askForEntityName,
-        fields: prompts.askForEntityFields
+        fields: prompts.askForEntityFields,
+        relationships: prompts.askForRelationship
     },
 
     configuring: function () {
@@ -32,7 +39,7 @@ module.exports = Generator.extend({
     },
 
     default: function () {
-        
+
     },
 
     writing: {

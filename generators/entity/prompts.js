@@ -51,13 +51,6 @@ function askForEntityFields() {
         },
         {
             when: (answers) => answers.addField === true,
-            type: 'input',
-            name: 'name',
-            message: 'What name would you like for your field?',
-            validate: (input) => input !== null && input !== ''
-        },
-        {
-            when: (answers) => answers.addField === true,
             type: 'list',
             name: 'type',
             message: 'What type would you like for your field?',
@@ -88,16 +81,17 @@ function askForEntityFields() {
                 },
                 {
                     value: 'Custom',
-                    name: 'custom'
+                    name: 'Custom'
                 }
             ]
         },
         {
             when: function (response) {
-                return response.fieldType === 'Custom';
+                return response.type === 'Custom';
             },
             type: 'input',
             name: 'fieldTypeName',
+            message: 'Name of custom type?',
             validate: function (response) {
                 if (response === '') {
                     return 'Field Type name can not be empty';
@@ -110,17 +104,41 @@ function askForEntityFields() {
                 }
 
                 return true;
+            }
+        },
+        {
+            when: (answers) => answers.addField === true,
+            type: 'input',
+            name: 'name',
+            message: 'What name would you like for your field?',
+            validate: (response) => {
+                if (response === '') {
+                    return 'Field name cannot not be empty';
+                }
+                if (response.charAt(0) === response.charAt(0).toUpperCase()) {
+                    return 'Field name must start with lower case';
+                }
+                if (validator.isReserved(response, 'JAVA')) {
+                    return 'Your field name cannot contain a Java reserved keyword';
+                }
+                if (this.fieldNamesSnakeCase.indexOf(_.snakeCase(response)) !== -1) {
+                    return 'Field name already used.';
+                }
+
+                return true;
             },
-            message: 'Name of custom type?'
-        }];
+            default: (response) => _.camelCase(response.fieldTypeName)
+        }
+    ];
     this.prompt(prompts).then((answers) => {
         var field = {};
-        if (answers.fieldType === 'Custom') {
-            answers.fieldType = answers.fieldTypeName;
+        if (answers.type === 'Custom') {
+            answers.type = answers.fieldTypeName;
         }
         if (answers.addField) {
             field.name = _.camelCase(answers.name);
             field.type = answers.type;
+            this.fieldNamesSnakeCase.push(_.snakeCase(field.name));
             this.fields.push(field);
             logFields.call(this);
             askForEntityFields.call(this, done);
