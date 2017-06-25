@@ -1,12 +1,13 @@
 'use strict';
-const chalk = require('chalk');
 const validator = require('../validator');
 const _ = require('lodash');
+const util = require('../util');
 
 module.exports = {
     askForEntityName,
     askForEntityFields,
-    askForRelationship
+    askForRelationship,
+    askForQueryMethods
 };
 
 function askForEntityName() {
@@ -140,7 +141,7 @@ function askForEntityFields() {
             field.type = answers.type;
             this.fieldNamesSnakeCase.push(_.snakeCase(field.name));
             this.fields.push(field);
-            logFields.call(this);
+            util.logFields.call(this);
             askForEntityFields.call(this, done);
         } else {
             done();
@@ -251,11 +252,36 @@ function askForRelationship() {
     });
 }
 
-function logFields() {
-    if (this.fields.length > 0) {
-        this.log('Currently added fields:');
-        this.fields.forEach((field) => {
-            this.log(chalk.grey(field.name));
-        });
-    }
+function askForQueryMethods() {
+    var done = this.async();
+    var prompts = [
+        {
+            type: 'confirm',
+            name: 'generateQueryMethods',
+            message: 'Do you want to include query methods for your entity?',
+            default: false
+        },
+        {
+            when: (response) => response.generateQueryMethods === true,
+            type: 'checkbox',
+            name: 'queryMethods',
+            message: 'For which fields do you want query methods?',
+            choices: () => this.fields.slice()
+        }
+    ];
+    this.prompt(prompts).then((answers) => {
+        if (answers.generateQueryMethods === true) {
+            _.forOwn(answers.queries, (index) => {
+                var queryMethod = {
+                    snake: _.toUpper(_.snakeCase(index)),
+                    upperCamel: _.upperFirst(_.camelCase(index)),
+                    camel: _.camelCase(index),
+                    type: util.findTypeByItsName.call(this, index)
+                };
+                this.queryMethods.push(queryMethod);
+            }
+            );
+        }
+        done();
+    });
 }

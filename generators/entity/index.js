@@ -17,6 +17,7 @@ module.exports = Generator.extend({
             this.fields = [];
             this.fieldNamesSnakeCase = [];
             this.relationships = [];
+            this.queryMethods = [];
             this.hasOneToOneRelationship = false;
             this.hasOneToManyRelationship = false;
             this.hasManyToOneRelationship = false;
@@ -27,7 +28,8 @@ module.exports = Generator.extend({
     prompting: {
         name: prompts.askForEntityName,
         fields: prompts.askForEntityFields,
-        relationships: prompts.askForRelationship
+        relationships: prompts.askForRelationship,
+        queries: prompts.askForQueryMethods
     },
 
     configuring: function () {

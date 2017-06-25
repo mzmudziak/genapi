@@ -8,4 +8,4 @@ function isReserved(name, type) {
 
 module.exports = {
     isReserved: isReserved
-}
+};
