@@ -8,11 +8,6 @@ const util = require('../util');
 const writing = require('./writing');
 
 module.exports = Generator.extend({
-  
-  _privateMethod: function () {
-      this.log('This method wont run automatically');
-  },
-
   initializing: {
     greeting: function () {
       this.log(yosay(
