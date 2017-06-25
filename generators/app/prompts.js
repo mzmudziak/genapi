@@ -140,5 +140,7 @@ function determineDbURL(db, appName) {
         case 'mysql': return 'jdbc:mysql://localhost:3306/' + _.toLower(appName);
         case 'postgresql': return 'jdbc:postgresql://localhost:5432/' + _.toLower(appName);
         default: return '';
+
     }
 }
+

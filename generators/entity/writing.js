@@ -2,7 +2,7 @@
 
 module.exports = {
     entities
-}
+};
 
 function entities() {
     this.fs.copyTpl(

@@ -1,5 +1,6 @@
 'use strict';
 const chalk = require('chalk');
+const validator = require('../validator');
 const _ = require('lodash');
 
 module.exports = {
@@ -15,7 +16,22 @@ function askForEntityName() {
             type: 'input',
             name: 'entityName',
             message: 'What name would you like for your entity?',
-            validate: (input) => input !== null && input !== ''
+            validate: function (response) {
+                if (!(/^([a-zA-Z0-9_]*)$/).test(response)) {
+                    return 'Entity name cannot contain special characters';
+                }
+                if (_.startsWith(_.toLower(response), 'entity')) {
+                    return 'Entity name cannot start with "Entity"';
+                }
+                if (validator.isReserved(response, 'JAVA')) {
+                    return 'Your entity name cannot contain a Java reserved keyword';
+                }
+                if (response === '') {
+                    return 'The entity name cannot be empty';
+                }
+
+                return true;
+            }
         }];
     this.prompt(prompts).then((answers) => {
         this.entityName = _.upperFirst(answers.entityName);
@@ -64,7 +80,8 @@ function askForEntityFields() {
                 {
                     name: 'Boolean',
                     value: 'Boolean'
-                }]
+                }
+            ]
         }];
     this.prompt(prompts).then((answers) => {
         var field = {};

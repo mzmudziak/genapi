@@ -32,7 +32,7 @@ module.exports = Generator.extend({
     },
 
     default: function () {
-
+        
     },
 
     writing: {
