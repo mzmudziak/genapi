@@ -3,6 +3,10 @@ package <%= package %>.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import <%= package %>.domain.<%= entityName %>;
 
+<%_ if (queryMethods.length > 0) { _%>
+import java.util.List;
+<%_ } _%>
+
 public interface <%= entityName %>Repository extends JpaRepository<<%= entityName %>, Long> {
     <%_ for (index in queryMethods) {
 	var query_camel  = queryMethods[index].camel;
