@@ -2,18 +2,18 @@ package <%= package %>.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-<%_ if (hasOneToOneRelationship === true) { _%>
+<% if (hasOneToOneRelationship === true) { %>
 import javax.persistence.OneToOne;
-<%_ } _%>
-<%_ if (hasOneToManyRelationship === true) { _%>
+<% } %>
+<% if (hasOneToManyRelationship === true) { %>
 import javax.persistence.OneToMany;
-<%_ } _%>
-<%_ if (hasManyToOneRelationship === true) { _%>
+<% } %>
+<% if (hasManyToOneRelationship === true) { %>
 import javax.persistence.ManyToOne;
-<%_ } _%>
-<%_ if (hasManyToManyRelationship === true) { _%>
+<% } %>
+<% if (hasManyToManyRelationship === true) { %>
 import javax.persistence.ManyToMany;
-<%_ } _%>
+<% } %>
 
 import javax.persistence.*;
 
@@ -28,19 +28,19 @@ public class <%= entityName %> {
     <% for (idx in fields){ %>
     private <%= fields[idx].type %> <%= fields[idx].name %>;
     <% } %>
-    <%_ for (index in relationships) {
+    <% for (index in relationships) {
   var relationshipType = relationships[index].type;
   var relationshipName = relationships[index].name;
-  var relationshipFieldName = relationships[index].field; _%>
-<%_ if (relationshipType === 'one_to_one') { _%>
+  var relationshipFieldName = relationships[index].field; %>
+<% if (relationshipType === 'one_to_one') { %>
     @OneToOne
-<%_ } else if (relationshipType === 'one_to_many') { _%>
+<% } else if (relationshipType === 'one_to_many') { %>
     @OneToMany
-<%_ } else if (relationshipType === 'many_to_one') { _%>
+<% } else if (relationshipType === 'many_to_one') { %>
     @ManyToOne
-<%_ } else if (relationshipType === 'many_to_many') { _%>
+<% } else if (relationshipType === 'many_to_many') { %>
     @ManyToMany
- <%_ } _%>
+ <% } %>
     private <%= relationshipName %> <%= relationshipFieldName %>;
-<%_ } _%>
+<% } %>
 }

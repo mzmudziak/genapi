@@ -46,7 +46,7 @@ module.exports = Generator.extend({
     },
 
     writing: {
-        entities: writing.entities
+        java: writing.java
     },
 
     conflicts: function () {
